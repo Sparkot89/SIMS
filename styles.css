@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: transparent;
+    color: #fff;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.needs-panel {
+    background: transparent;
+    border: 3px solid #00d4ff;
+    border-radius: 15px;
+    padding: 20px;
+    min-width: 400px;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+                inset 0 0 20px rgba(0, 212, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.need-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.need-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateX(5px);
+}
+
+.need-icon {
+    font-size: 32px;
+    margin-right: 15px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.need-info {
+    flex: 1;
+}
+
+.need-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.need-bar-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.need-bar {
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    transition: all 0.5s ease;
+    position: relative;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Colores de las barras según el nivel */
+.need-bar[data-level="high"] {
+    background: linear-gradient(90deg, #00ff88, #00cc66);
+}
+
+.need-bar[data-level="medium"] {
+    background: linear-gradient(90deg, #ffdd00, #ffaa00);
+}
+
+.need-bar[data-level="low"] {
+    background: linear-gradient(90deg, #ff6600, #ff0000);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.need-value {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 15px;
+    min-width: 50px;
+    text-align: right;
+    color: #00d4ff;
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+}
+
+/* Animación de entrada */
+.need-item {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* Responsive para diferentes tamaños */
+@media (max-width: 600px) {
+    .needs-panel {
+        min-width: 300px;
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 20px;
+    }
+    
+    .need-icon {
+        font-size: 24px;
+    }
+}
