@@ -3,7 +3,7 @@ class NeedsManager {
     constructor() {
         this.needs = [
             'hambre', 'energia', 'diversion', 'social', 
-            'higiene', 'mental', 'ambiente', 'confort'
+            'higiene', 'mental'
         ];
         this.storageKey = 'sims_needs';
         this.updateInterval = 100; // Actualizar cada 100ms para mayor respuesta

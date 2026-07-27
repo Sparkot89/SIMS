@@ -3,7 +3,7 @@ class NeedsManager {
     constructor() {
         this.needs = [
             'hambre', 'energia', 'diversion', 'social', 
-            'higiene', 'mental', 'ambiente', 'confort'
+            'higiene', 'mental'
         ];
         this.updateInterval = 500; // Actualizar cada 500ms
         this.apiUrl = window.location.origin + '/api/needs';

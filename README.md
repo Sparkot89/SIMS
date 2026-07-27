@@ -23,8 +23,7 @@ Sistema de overlay para mostrar barras de progreso estilo Los Sims en tus stream
 | 👥 | Social | Nivel de interacción social |
 | 🚿 | Higiene | Nivel de limpieza personal |
 | 🚽 | mental | Necesidad de ir al baño |
-| 🏠 | Ambiente | Calidad del entorno |
-| 🛋️ | Confort | Nivel de comodidad |
+
 
 ## 🚀 Instalación
 

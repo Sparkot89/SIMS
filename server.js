@@ -17,9 +17,7 @@ let needs = {
   diversion: 100,
   social: 100,
   higiene: 100,
-  mental: 100,
-  ambiente: 100,
-  confort: 100
+  mental: 100
 };
 
 // Ruta principal - servir el overlay
