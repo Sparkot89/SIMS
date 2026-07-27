@@ -158,6 +158,23 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/actualizar-necesidad', (req, res) => {
+    const necesidad = req.query.necesidad; // Recibe "hambre", "energia", "diversion", etc.
+    const valor = req.query.valor;         // Recibe el número (ej: "20")
+
+    // Validación de que existan los datos y el valor sea un número
+    if (!necesidad || !valor || isNaN(valor)) {
+        return res.send('⚠️ Uso correcto: !necesidad [nombre] [número]. Ejemplo: !necesidad hambre 50');
+    }
+
+    // Aquí manejas la lógica de tu aplicación para actualizar el estado correcto
+    // Ejemplo:
+    needs[necesidad] = Math.max(0, Math.min(100, parseInt(valor)));
+
+    // Respuesta en texto plano que leerá Nightbot en el chat
+    res.send(`✅ Se ha actualizado la necesidad de [${necesidad}] al ${valor}%.`);
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🎮 Servidor SIMS iniciado en puerto ${PORT}`);
@@ -165,3 +182,4 @@ app.listen(PORT, () => {
   console.log(`🎛️ Panel de control: http://localhost:${PORT}/control`);
   console.log(`🔌 API: http://localhost:${PORT}/api/needs`);
 });
+
