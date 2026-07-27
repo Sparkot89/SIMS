@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control SIMS - Panel Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .need-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .need-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .need-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .need-icon {
+            font-size: 48px;
+            margin-right: 15px;
+        }
+        
+        .need-title {
+            flex: 1;
+        }
+        
+        .need-title h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .need-value-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .progress-bar.high {
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+        }
+        
+        .progress-bar.medium {
+            background: linear-gradient(90deg, #ffdd00, #ffaa00);
+        }
+        
+        .progress-bar.low {
+            background: linear-gradient(90deg, #ff6600, #ff0000);
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-inc {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-dec {
+            background: #f56565;
+            color: white;
+        }
+        
+        .btn-set {
+            background: #667eea;
+            color: white;
+            grid-column: 1 / -1;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .global-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .global-controls h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .btn-reset-all {
+            background: #f56565;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-reset-all:hover {
+            background: #e53e3e;
+            transform: scale(1.05);
+        }
+        
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .status-message.show {
+            opacity: 1;
+        }
+        
+        .status-message.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-message.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .overlay-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .overlay-link a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .overlay-link a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 Panel de Control SIMS</h1>
+        <p>Controla las necesidades en tiempo real</p>
+    </div>
+    
+    <div class="global-controls">
+        <h2>Controles Globales</h2>
+        <button class="btn-reset-all" onclick="resetAll()">🔄 Resetear Todo al 100%</button>
+    </div>
+    
+    <div class="container" id="needs-container">
+        <!-- Las tarjetas se generarán dinámicamente -->
+    </div>
+    
+    <div class="overlay-link">
+        <a href="/" target="_blank">👁️ Ver Overlay</a>
+    </div>
+    
+    <div class="status-message" id="status-message"></div>
+    
+    <script>
+        const API_URL = '/api/needs';
+        
+        const needsConfig = [
+            { id: 'hambre', icon: '🍔', name: 'Hambre' },
+            { id: 'energia', icon: '⚡', name: 'Energía' },
+            { id: 'diversion', icon: '🎮', name: 'Diversión' },
+            { id: 'social', icon: '👥', name: 'Social' },
+            { id: 'higiene', icon: '🚿', name: 'Higiene' },
+            { id: 'vejiga', icon: '🚽', name: 'Vejiga' },
+            { id: 'ambiente', icon: '🏠', name: 'Ambiente' },
+            { id: 'confort', icon: '🛋️', name: 'Confort' }
+        ];
+        
+        let needsData = {};
+        
+        function showStatus(message, isSuccess = true) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message show ' + (isSuccess ? 'success' : 'error');
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 3000);
+        }
+        
+        function getProgressClass(value) {
+            if (value >= 70) return 'high';
+            if (value >= 30) return 'medium';
+            return 'low';
+        }
+        
+        function createNeedCard(config) {
+            const value = needsData[config.id] || 100;
+            return `
+                <div class="need-card">
+                    <div class="need-header">
+                        <div class="need-icon">${config.icon}</div>
+                        <div class="need-title">
+                            <h3>${config.name}</h3>
+                            <div class="need-value-display" id="value-${config.id}">${value}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar ${getProgressClass(value)}" 
+                             id="bar-${config.id}" 
+                             style="width: ${value}%">
+                        </div>
+                    </div>
+                    
+                    <input type="range" 
+                           id="slider-${config.id}" 
+                           min="0" 
+                           max="100" 
+                           value="${value}"
+                           oninput="updateSliderValue('${config.id}', this.value)"
+                           onchange="setNeed('${config.id}', this.value)">
+                    
+                    <div class="controls">
+                        <button class="btn btn-dec" onclick="modifyNeed('${config.id}', -10)">-10</button>
+                        <button class="btn btn-dec" onclick="modifyNeed('${config.id}', -25)">-25</button>
+                        <button class="btn btn-inc" onclick="modifyNeed('${config.id}', 10)">+10</button>
+                        <button class="btn btn-inc" onclick="modifyNeed('${config.id}', 25)">+25</button>
+                        <button class="btn btn-set" onclick="setNeed('${config.id}', 0)">0%</button>
+                        <button class="btn btn-set" onclick="setNeed('${config.id}', 100)">100%</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderNeeds() {
+            const container = document.getElementById('needs-container');
+            container.innerHTML = needsConfig.map(createNeedCard).join('');
+        }
+        
+        function updateNeedDisplay(needId, value) {
+            const valueEl = document.getElementById(`value-${needId}`);
+            const barEl = document.getElementById(`bar-${needId}`);
+            const sliderEl = document.getElementById(`slider-${needId}`);
+            
+            if (valueEl) valueEl.textContent = Math.round(value) + '%';
+            if (barEl) {
+                barEl.style.width = value + '%';
+                barEl.className = 'progress-bar ' + getProgressClass(value);
+            }
+            if (sliderEl) sliderEl.value = value;
+        }
+        
+        function updateSliderValue(needId, value) {
+            updateNeedDisplay(needId, value);
+        }
+        
+        async function loadNeeds() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                if (data.success) {
+                    needsData = data.needs;
+                    Object.keys(needsData).forEach(need => {
+                        updateNeedDisplay(need, needsData[need]);
+                    });
+                }
+            } catch (error) {
+                console.error('Error al cargar necesidades:', error);
+            }
+        }
+        
+        async function setNeed(needId, value) {
+            try {
+                const response = await fetch(`${API_URL}/${needId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value: parseInt(value) })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    needsData[needId] = data.newValue;
+                    updateNeedDisplay(needId, data.newValue);
+                    showStatus(`✅ ${needId} establecido a ${data.newValue}%`);
+                }
+            } catch (error) {
+                showStatus('❌ Error al actualizar', false);
+            }
+        }
+        
+        async function modifyNeed(needId, change) {
+            try {
+                const response = await fetch(`${API_URL}/${needId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ change: change })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    needsData[needId] = data.newValue;
+                    updateNeedDisplay(needId, data.newValue);
+                    const symbol = change > 0 ? '+' : '';
+                    showStatus(`✅ ${needId}: ${symbol}${change}% → ${data.newValue}%`);
+                }
+            } catch (error) {
+                showStatus('❌ Error al modificar', false);
+            }
+        }
+        
+        async function resetAll() {
+            if (confirm('¿Resetear todas las necesidades al 100%?')) {
+                try {
+                    const response = await fetch(`${API_URL}/reset/all`, {
+                        method: 'POST'
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        await loadNeeds();
+                        showStatus('✅ Todas las necesidades reseteadas');
+                    }
+                } catch (error) {
+                    showStatus('❌ Error al resetear', false);
+                }
+            }
+        }
+        
+        // Inicializar
+        loadNeeds();
+        renderNeeds();
+        
+        // Actualizar cada 2 segundos
+        setInterval(loadNeeds, 2000);
+    </script>
+</body>
+</html>
