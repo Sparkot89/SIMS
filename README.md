@@ -22,7 +22,7 @@ Sistema de overlay para mostrar barras de progreso estilo Los Sims en tus stream
 | 🎮 | Diversión | Nivel de entretenimiento |
 | 👥 | Social | Nivel de interacción social |
 | 🚿 | Higiene | Nivel de limpieza personal |
-| 🚽 | focus | Necesidad de ir al baño |
+| 🚽 | mental | Necesidad de ir al baño |
 | 🏠 | Ambiente | Calidad del entorno |
 | 🛋️ | Confort | Nivel de comodidad |
 
@@ -88,7 +88,7 @@ Abre `actualizar-localStorage.html` en tu navegador:
 Haz doble clic en:
 - `comer.bat` - Aumenta hambre +30%
 - `dormir.bat` - Restaura energía al 100%
-- `bano.bat` - Restaura focus e higiene al 100%
+- `bano.bat` - Restaura mental e higiene al 100%
 - `reset.bat` - Resetea todo al 100%
 
 ### Método 4: Consola del Navegador

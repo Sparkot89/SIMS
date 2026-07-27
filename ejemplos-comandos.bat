@@ -29,7 +29,7 @@ pause
 echo.
 echo 📊 Ejemplo 4: Establecer múltiples valores
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "higiene" -value 80
-powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "focus" -value 90
+powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "mental" -value 90
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "social" -value 60
 echo.
 pause

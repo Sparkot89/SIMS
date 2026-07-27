@@ -6,7 +6,7 @@ powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "energia" -
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "diversion" -value 100
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "social" -value 100
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "higiene" -value 100
-powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "focus" -value 100
+powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "mental" -value 100
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "ambiente" -value 100
 powershell -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1" -need "confort" -value 100
 echo.

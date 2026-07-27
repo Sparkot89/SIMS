@@ -3,7 +3,7 @@
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("hambre", "energia", "diversion", "social", "higiene", "focus", "ambiente", "confort")]
+    [ValidateSet("hambre", "energia", "diversion", "social", "higiene", "mental", "ambiente", "confort")]
     [string]$need,
     
     [Parameter(Mandatory=$true)]
