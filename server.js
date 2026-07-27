@@ -158,7 +158,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('/actualizar-necesidad', (req, res) => {
+app.get('/api/needs/setearnecesidad', (req, res) => {
     const necesidad = req.query.necesidad; // Recibe "hambre", "energia", "diversion", etc.
     const valor = req.query.valor;         // Recibe el número (ej: "20")
 
