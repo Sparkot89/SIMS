@@ -158,15 +158,14 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('/api/needs/setearnecesidad', (req, res) => {
-    const necesidad = req.query.necesidad; // Recibe "hambre", "energia", "diversion", etc.
-    const valor = req.query.valor;         // Recibe el número (ej: "20")
-
+app.get('/api/needs/set/:necesidad/', (req, res) => {
+    const { necesidad} = req.params; // Recibe "hambre", "energia", "diversion", etc. y el número (ej: "20")
+    const { valor } = req.query; // Recibe el valor a establecer (ej: "50")
     // Validación de que existan los datos y el valor sea un número
     if (!necesidad || !valor || isNaN(valor)) {
         return res.send('⚠️ Uso correcto: !necesidad [nombre] [número]. Ejemplo: !necesidad hambre 50');
     }
-
+    
     // Aquí manejas la lógica de tu aplicación para actualizar el estado correcto
     // Ejemplo:
     needs[necesidad] = Math.max(0, Math.min(100, parseInt(valor)));
