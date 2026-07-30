@@ -22,7 +22,7 @@ body {
     border: 3px solid #00d4ff;
     border-radius: 15px;
     padding: 20px;
-    min-width: 400px;
+    min-width: 500px;
     box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
                 inset 0 0 20px rgba(0, 212, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -42,12 +42,13 @@ body {
 .need-item {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 8px;
+    padding: 5px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    border-radius: 50px;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    position: relative;
 }
 
 .need-item:hover {
@@ -56,42 +57,64 @@ body {
     transform: translateX(5px);
 }
 
+/* Círculo con icono pegado a la izquierda */
 .need-icon {
-    font-size: 32px;
-    margin-right: 15px;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    /* margin-right: 12px; */
+    /* box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3); */
+    border: 5px solid white;
+    /* filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6)); */
+    z-index: 2;
 }
 
 .need-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .need-label {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    margin-top: -15px;
     color: #e0e0e0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    padding-left: 5px;
 }
 
 .need-bar-container {
     width: 100%;
-    height: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+    margin-left: -5px;
+    height: 26px;
+    background: rgba(0, 0, 0, 0.6);
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
     overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid gray;
+    /* box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5); */
+    position: relative;
 }
 
 .need-bar {
     height: 100%;
     width: 100%;
-    border-radius: 8px;
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
     transition: all 0.5s ease;
     position: relative;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(90deg, #00ff88, #00cc66);
 }
 
 /* Colores de las barras según el nivel */
@@ -104,8 +127,18 @@ body {
 }
 
 .need-bar[data-level="low"] {
-    background: linear-gradient(90deg, #ff6600, #ff0000);
-    animation: pulse 1s infinite;
+    background: #C92F38;
+    /* animation: pulse 1s infinite; */
+}
+
+.need-icon[data-level="high"] {
+    background: #00ff88;
+}
+.need-icon[data-level="medium"] {
+    background: #ffdd00;
+}
+.need-icon[data-level="low"] {
+    background: #C92F38;
 }
 
 @keyframes pulse {
@@ -118,13 +151,15 @@ body {
 }
 
 .need-value {
-    font-size: 14px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
     font-weight: bold;
-    margin-left: 15px;
-    min-width: 50px;
-    text-align: right;
-    color: #00d4ff;
-    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    z-index: 10;
 }
 
 /* Animación de entrada */
@@ -143,11 +178,10 @@ body {
     }
 }
 
-
 /* Responsive para diferentes tamaños */
 @media (max-width: 600px) {
     .needs-panel {
-        min-width: 300px;
+        min-width: 350px;
         padding: 15px;
     }
     
@@ -156,6 +190,17 @@ body {
     }
     
     .need-icon {
-        font-size: 24px;
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        font-size: 22px;
+    }
+    
+    .need-label {
+        font-size: 10px;
+    }
+    
+    .need-bar-container {
+        height: 22px;
     }
 }

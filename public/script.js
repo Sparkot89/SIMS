@@ -49,9 +49,10 @@ class NeedsManager {
         value = Math.max(0, Math.min(100, value));
         
         const bar = document.getElementById(`bar-${needName}`);
+        const icon = document.getElementById(`icon-${needName}`);
         const valueText = document.getElementById(`value-${needName}`);
         
-        if (bar && valueText) {
+        if (bar && icon && valueText) {
             // Actualizar el ancho de la barra
             bar.style.width = value + '%';
             
@@ -61,10 +62,13 @@ class NeedsManager {
             // Actualizar el color según el nivel
             if (value >= 70) {
                 bar.setAttribute('data-level', 'high');
+                icon.setAttribute('data-level', 'high');
             } else if (value >= 30) {
                 bar.setAttribute('data-level', 'medium');
+                icon.setAttribute('data-level', 'medium');
             } else {
                 bar.setAttribute('data-level', 'low');
+                icon.setAttribute('data-level', 'low');
             }
         }
     }
