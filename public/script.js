@@ -5,7 +5,7 @@ class NeedsManager {
             'hambre', 'energia', 'diversion', 'social',
             'higiene', 'mental'
         ];
-        this.updateInterval = 500; // Actualizar cada 500ms
+        // this.updateInterval = 500; // Actualizar cada 500ms
         this.apiUrl = window.location.origin + '/api/needs';
         this.init();
     }
@@ -15,11 +15,11 @@ class NeedsManager {
         this.loadNeeds();
 
         // Iniciar el loop de actualización
-        setInterval(() => this.loadNeeds(), this.updateInterval);
+        // setInterval(() => this.loadNeeds(), this.updateInterval);
 
         console.log('✅ Sistema de necesidades iniciado (API)');
         console.log('🔌 API URL:', this.apiUrl);
-        console.log('📊 Actualizando cada', this.updateInterval, 'ms');
+        // console.log('📊 Actualizando cada', this.updateInterval, 'ms');
     }
 
     async loadNeeds() {
