@@ -107,7 +107,7 @@ body {
 }
 
 .need-bar-container {
-    width: 100%;
+    width: 60%;
     margin-left: -5px;
     height: 1.3rem;
     background: rgba(0, 0, 0, 0.6);
