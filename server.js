@@ -174,6 +174,13 @@ app.get('/api/needs/set/:necesidad/', (req, res) => {
     res.send(`✅ Se ha actualizado la necesidad de [${necesidad}] al ${valor}%.`);
 });
 
+app.get('/api/needs/resetall', (req, res) => {
+    Object.keys(needs).forEach(need => {
+        needs[need] = 100;
+    });
+    res.send(`✅ Se han reseteado todas las necesidades.`);
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🎮 Servidor SIMS iniciado en puerto ${PORT}`);
