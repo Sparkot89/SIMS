@@ -135,15 +135,13 @@ class NeedsManager {
     async resetAll() {
         try {
             const response = await fetch(`${this.apiUrl}/reset/all`, {
-                method: 'POST'
+                method: 'GET'
             });
 
-            const data = await response.json();
-            if (data.success) {
-                this.loadNeeds();
-                console.log('🔄 Todas las necesidades reseteadas al 100%');
-                return data;
-            }
+            const text = await response.text();
+            console.log('🔄 Todas las necesidades reseteadas al 100%');
+            this.loadNeeds();
+            return text;
         } catch (error) {
             console.error('❌ Error al resetear:', error);
         }

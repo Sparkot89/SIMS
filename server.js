@@ -32,8 +32,8 @@ app.get('/control', (req, res) => {
 
 // API: Obtener todas las necesidades
 app.get('/api/needs', (req, res) => {
-  res.json({ 
-    success: true, 
+  res.json({
+    success: true,
     needs: needs,
     timestamp: new Date().toISOString()
   });
@@ -42,17 +42,17 @@ app.get('/api/needs', (req, res) => {
 // API: Obtener una necesidad específica
 app.get('/api/needs/:need', (req, res) => {
   const { need } = req.params;
-  
+
   if (needs.hasOwnProperty(need)) {
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       need: need,
       value: needs[need]
     });
   } else {
-    res.status(404).json({ 
-      success: false, 
-      error: 'Necesidad no encontrada' 
+    res.status(404).json({
+      success: false,
+      error: 'Necesidad no encontrada'
     });
   }
 });
@@ -61,26 +61,26 @@ app.get('/api/needs/:need', (req, res) => {
 app.post('/api/needs/:need', (req, res) => {
   const { need } = req.params;
   const { value } = req.body;
-  
+
   if (!needs.hasOwnProperty(need)) {
-    return res.status(404).json({ 
-      success: false, 
-      error: 'Necesidad no encontrada' 
+    return res.status(404).json({
+      success: false,
+      error: 'Necesidad no encontrada'
     });
   }
-  
+
   if (typeof value !== 'number' || value < 0 || value > 100) {
-    return res.status(400).json({ 
-      success: false, 
-      error: 'El valor debe ser un número entre 0 y 100' 
+    return res.status(400).json({
+      success: false,
+      error: 'El valor debe ser un número entre 0 y 100'
     });
   }
-  
+
   const oldValue = needs[need];
   needs[need] = value;
-  
-  res.json({ 
-    success: true, 
+
+  res.json({
+    success: true,
     need: need,
     oldValue: oldValue,
     newValue: value
@@ -91,26 +91,26 @@ app.post('/api/needs/:need', (req, res) => {
 app.patch('/api/needs/:need', (req, res) => {
   const { need } = req.params;
   const { change } = req.body;
-  
+
   if (!needs.hasOwnProperty(need)) {
-    return res.status(404).json({ 
-      success: false, 
-      error: 'Necesidad no encontrada' 
+    return res.status(404).json({
+      success: false,
+      error: 'Necesidad no encontrada'
     });
   }
-  
+
   if (typeof change !== 'number') {
-    return res.status(400).json({ 
-      success: false, 
-      error: 'El cambio debe ser un número' 
+    return res.status(400).json({
+      success: false,
+      error: 'El cambio debe ser un número'
     });
   }
-  
+
   const oldValue = needs[need];
   needs[need] = Math.max(0, Math.min(100, oldValue + change));
-  
-  res.json({ 
-    success: true, 
+
+  res.json({
+    success: true,
     need: need,
     oldValue: oldValue,
     newValue: needs[need],
@@ -119,23 +119,19 @@ app.patch('/api/needs/:need', (req, res) => {
 });
 
 // API: Resetear todas las necesidades
-app.post('/api/needs/reset/all', (req, res) => {
+app.get('/api/needs/reset/all', (req, res) => {
   Object.keys(needs).forEach(need => {
     needs[need] = 100;
   });
-  
-  res.json({ 
-    success: true, 
-    message: 'Todas las necesidades reseteadas al 100%',
-    needs: needs
-  });
+
+  res.send('✅ Todas las necesidades han sido reseteadas al 100%.');
 });
 
 // API: Establecer múltiples necesidades a la vez
 app.post('/api/needs', (req, res) => {
   const updates = req.body;
   const results = {};
-  
+
   Object.keys(updates).forEach(need => {
     if (needs.hasOwnProperty(need)) {
       const value = Math.max(0, Math.min(100, updates[need]));
@@ -143,42 +139,42 @@ app.post('/api/needs', (req, res) => {
       results[need] = value;
     }
   });
-  
-  res.json({ 
-    success: true, 
-    updated: results 
+
+  res.json({
+    success: true,
+    updated: results
   });
 });
 
 // Health check para Render
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString() 
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString()
   });
 });
 
 app.get('/api/needs/set/:necesidad/', (req, res) => {
-    const { necesidad} = req.params; // Recibe "hambre", "energia", "diversion", etc. y el número (ej: "20")
-    const { valor } = req.query; // Recibe el valor a establecer (ej: "50")
-    // Validación de que existan los datos y el valor sea un número
-    if (!necesidad || !valor || isNaN(valor)) {
-        return res.send('⚠️ Uso correcto: !necesidad [nombre] [número]. Ejemplo: !necesidad hambre 50');
-    }
-    
-    // Aquí manejas la lógica de tu aplicación para actualizar el estado correcto
-    // Ejemplo:
-    needs[necesidad] = Math.max(0, Math.min(100, parseInt(valor)));
+  const { necesidad } = req.params; // Recibe "hambre", "energia", "diversion", etc. y el número (ej: "20")
+  const { valor } = req.query; // Recibe el valor a establecer (ej: "50")
+  // Validación de que existan los datos y el valor sea un número
+  if (!necesidad || !valor || isNaN(valor)) {
+    return res.send('⚠️ Uso correcto: !necesidad [nombre] [número]. Ejemplo: !necesidad hambre 50');
+  }
 
-    // Respuesta en texto plano que leerá Nightbot en el chat
-    res.send(`✅ Se ha actualizado la necesidad de [${necesidad}] al ${valor}%.`);
+  // Aquí manejas la lógica de tu aplicación para actualizar el estado correcto
+  // Ejemplo:
+  needs[necesidad] = Math.max(0, Math.min(100, parseInt(valor)));
+
+  // Respuesta en texto plano que leerá Nightbot en el chat
+  res.send(`✅ Se ha actualizado la necesidad de [${necesidad}] al ${valor}%.`);
 });
 
 app.get('/api/needs/resetall', (req, res) => {
-    Object.keys(needs).forEach(need => {
-        needs[need] = 100;
-    });
-    res.send(`✅ Se han reseteado todas las necesidades.`);
+  Object.keys(needs).forEach(need => {
+    needs[need] = 100;
+  });
+  res.send(`✅ Se han reseteado todas las necesidades.`);
 });
 
 // Iniciar servidor
