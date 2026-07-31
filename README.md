@@ -132,7 +132,7 @@ Edita `styles.css` para modificar los colores:
 }
 
 /* Nivel bajo (rojo) */
-.need-bar[data-level="low"] {
+.need-bar[data-level="very-low"] {
     background: linear-gradient(90deg, #ff6600, #ff0000);
 }
 ```

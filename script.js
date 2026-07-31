@@ -69,14 +69,11 @@ class NeedsManager {
         value = Math.max(0, Math.min(100, value));
         
         const bar = document.getElementById(`bar-${needName}`);
-        const valueText = document.getElementById(`value-${needName}`);
+        const icon = document.getElementById(`icon-${needName}`);
         
-        if (bar && valueText) {
+        if (bar && icon) {
             // Actualizar el ancho de la barra
             bar.style.width = value + '%';
-            
-            // Actualizar el texto del valor
-            valueText.textContent = Math.round(value) + '%';
             
             // Actualizar el color según el nivel
             if (value >= 70) {
@@ -84,7 +81,7 @@ class NeedsManager {
             } else if (value >= 30) {
                 bar.setAttribute('data-level', 'medium');
             } else {
-                bar.setAttribute('data-level', 'low');
+                bar.setAttribute('data-level', 'very-low');
             }
         }
     }

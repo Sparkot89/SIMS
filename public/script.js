@@ -2,7 +2,7 @@
 class NeedsManager {
     constructor() {
         this.needs = [
-            'hambre', 'energia', 'diversion', 'social', 
+            'hambre', 'energia', 'diversion', 'social',
             'higiene', 'mental'
         ];
         this.updateInterval = 500; // Actualizar cada 500ms
@@ -13,10 +13,10 @@ class NeedsManager {
     init() {
         // Cargar valores iniciales
         this.loadNeeds();
-        
+
         // Iniciar el loop de actualización
         setInterval(() => this.loadNeeds(), this.updateInterval);
-        
+
         console.log('✅ Sistema de necesidades iniciado (API)');
         console.log('🔌 API URL:', this.apiUrl);
         console.log('📊 Actualizando cada', this.updateInterval, 'ms');
@@ -47,28 +47,24 @@ class NeedsManager {
     updateBar(needName, value) {
         // Asegurar que el valor esté entre 0 y 100
         value = Math.max(0, Math.min(100, value));
-        
+
+        const item = document.getElementById(`need-item-${needName}`);
         const bar = document.getElementById(`bar-${needName}`);
-        const icon = document.getElementById(`icon-${needName}`);
-        const valueText = document.getElementById(`value-${needName}`);
-        
-        if (bar && icon && valueText) {
+        if (item && bar) {
             // Actualizar el ancho de la barra
             bar.style.width = value + '%';
-            
-            // Actualizar el texto del valor
-            valueText.textContent = Math.round(value) + '%';
-            
+
+
+
             // Actualizar el color según el nivel
             if (value >= 70) {
-                bar.setAttribute('data-level', 'high');
-                icon.setAttribute('data-level', 'high');
-            } else if (value >= 30) {
-                bar.setAttribute('data-level', 'medium');
-                icon.setAttribute('data-level', 'medium');
+                item.setAttribute('data-level', 'high');
+            } else if (value >= 35) {
+                item.setAttribute('data-level', 'medium');
+            }else if (value >= 15) {
+                item.setAttribute('data-level', 'low');
             } else {
-                bar.setAttribute('data-level', 'low');
-                icon.setAttribute('data-level', 'low');
+                item.setAttribute('data-level', 'very-low');
             }
         }
     }
@@ -84,7 +80,7 @@ class NeedsManager {
                     },
                     body: JSON.stringify({ value: value })
                 });
-                
+
                 const data = await response.json();
                 if (data.success) {
                     this.updateBar(needName, data.newValue);
@@ -108,7 +104,7 @@ class NeedsManager {
                     },
                     body: JSON.stringify({ change: amount })
                 });
-                
+
                 const data = await response.json();
                 if (data.success) {
                     this.updateBar(needName, data.newValue);
@@ -141,7 +137,7 @@ class NeedsManager {
             const response = await fetch(`${this.apiUrl}/reset/all`, {
                 method: 'POST'
             });
-            
+
             const data = await response.json();
             if (data.success) {
                 this.loadNeeds();
@@ -176,7 +172,7 @@ class NeedsManager {
                 },
                 body: JSON.stringify(needsData)
             });
-            
+
             const data = await response.json();
             if (data.success) {
                 this.loadNeeds();
@@ -194,7 +190,7 @@ let needsManager;
 
 window.addEventListener('DOMContentLoaded', () => {
     needsManager = new NeedsManager();
-    
+
     // Exponer funciones globales para uso en consola
     window.setNeed = (need, value) => needsManager.setNeed(need, value);
     window.modifyNeed = (need, amount) => needsManager.modifyNeed(need, amount);
@@ -202,7 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
     window.resetAll = () => needsManager.resetAll();
     window.exportData = () => needsManager.exportData();
     window.importData = (data) => needsManager.importData(data);
-    
+
     console.log('🎮 Sistema SIMS cargado correctamente (API)');
     console.log('💡 Comandos disponibles en consola:');
     console.log('   await setNeed("hambre", 50) - Establecer valor exacto');
